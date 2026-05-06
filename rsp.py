@@ -9,27 +9,42 @@ def get_choices():
     choices={"player":player_choice,"computer":computer_choice}
     return choices
 
-def check_win(player,computer):
+def check_win(player,computer,player_score,computer_score):
     print(f"You chose {player}, computer chose {computer}")
     if player==computer:
-        return "It's a tie!"
+        result={"mssg":"It's a tie!","score":{"computer":computer_score+1,"you":player_score+1}}
+        return result
     elif player=="rock":
         if computer=="scissors":
-            return "Rock smashes scissors! You win!"
+            result={"mssg":"Rock smashes scissors! You win!","score":{"computer":computer_score,"you":player_score+1}}
+            return result
         else:
-            return "Paper covers rock! You lose. "
+            result={"mssg":"Paper covers rock! You lose. ","score":{"computer":computer_score+1,"you":player_score}}
+            return result
     elif player=="paper":
         if computer=='rock':
-            return "Paper covers rock! You win! "
+            result={"mssg":"Paper covers rock! You win! ","score":{"computer":computer_score,"you":player_score+1}}
+            return result
         else:
-            return "Scissor cuts paper! You lose."
+            result={"mssg":"Scissor cuts paper! You lose.","score":{"computer":computer_score+1,"you":player_score}}
+            return result
     else:
         if computer=='paper':
-            return "Scissor cuts paper! You win!"
+            result={"mssg": "Scissor cuts paper! You win!","score":{"computer":computer_score,"you":player_score+1}}
+            return result
         else:
-            return "Rock smashes scissors! You lose."
+            result={"mssg":"Rock smashes scissors! You lose.","score":{"computer":computer_score+1,"you":player_score}}
+            return result
 
+comp_score=0
+player_score=0
+print("5 chances are there to win the game")
+for i in range (5):
+    choices=get_choices()
+    result=check_win(choices["player"],choices["computer"],player_score,comp_score)
+    player_score=result["score"]["you"]
+    comp_score=result["score"]["computer"]
+    print(result["mssg"])
+    print(f"Score -> you: {player_score},computer: {comp_score}")
 
-choices=get_choices()
-result=check_win(choices["player"],choices["computer"])
-print(result)
+print("Thank you")
